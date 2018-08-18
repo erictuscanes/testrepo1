@@ -1,0 +1,49 @@
+Sub TickerVolume()
+
+  'Set an initial variable for holding the brand name
+   Dim Ticker_Name As String
+
+'Set an initial variable for the total stock volume
+  Dim Volume_Total As Double
+  Volume_Total = 0
+  
+  ' Keep track of the location for each ticker in the stock database
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+  
+  ' Loop through all tickers
+  For i = 2 To 797711
+  
+  ' Check to make sure we are not using the same tickers in different datasets. If not...
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    
+    ' Set the Ticker Name
+      Ticker_Name = Cells(i, 1).Value
+      
+ ' Add to the Volume Total
+      Volume_Total = Volume_Total + Cells(i, 7).Value
+      
+  ' Print the Ticker Name in the Summary Table
+      Range("J" & Summary_Table_Row).Value = Ticker_Name
+      
+  ' Print the Ticker Amount to the Summary Table
+      Range("K" & Summary_Table_Row).Value = Volume_Total
+      
+  ' Add one to the summary table row
+      Summary_Table_Row = Summary_Table_Row + 1
+      
+  ' Reset the Volume Total
+      Volume_Total = 0
+
+    ' If the cell immediately following a row is the same ticker...
+    Else
+
+      ' Add to the Volume
+      Volume_Total = Volume_Total + Cells(i, 3).Value
+
+    End If
+
+  Next i
+
+End Sub
+
